@@ -11,7 +11,7 @@
       </div>
       <div class='clearfix'></div>
       <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-12 ajax-onload" data-endpoint="/wp-json/scrappy/v1/live/<?php the_ID(); ?>">
           <div class="cssload-conveyor">
             <span></span>
             <span></span>
