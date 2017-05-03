@@ -10,10 +10,10 @@ class Slug_Custom_Route extends WP_REST_Controller {
    * @version integer 
    * 
    */
-  public function register_routes( $namespace = 'vendor', $base = 'route', $version = 1) {
+  public function register_routes( $namespace = 'vendor', $base = 'live', $version = 1) {
     
     $namespace = $namespace . '/v' . $version;
-    
+    // for all radios
     register_rest_route( $namespace, '/' . $base, array(
       array(
         'methods'         => WP_REST_Server::READABLE,
@@ -23,47 +23,22 @@ class Slug_Custom_Route extends WP_REST_Controller {
  
         ),
       ),
-      array(
-        'methods'         => WP_REST_Server::CREATABLE,
-        'callback'        => array( $this, 'create_item' ),
-        'permission_callback' => array( $this, 'create_item_permissions_check' ),
-        'args'            => $this->get_endpoint_args_for_item_schema( true ),
-      ),
     ) );
-    register_rest_route( $namespace, '/' . $base . '/(?P<id>[\d]+)', array(
+    // for rids delimited with _
+    register_rest_route( $namespace, '/' . $base . '/(?P<rid>[\d_,]+)', array(
       array(
         'methods'         => WP_REST_Server::READABLE,
-        'callback'        => array( $this, 'get_item' ),
-        'permission_callback' => array( $this, 'get_item_permissions_check' ),
+        'callback'        => array( $this, 'get_items' ),
+        'permission_callback' => array( $this, 'get_items_permissions_check' ),
         'args'            => array(
           'context'          => array(
             'default'      => 'view',
           ),
         ),
       ),
-      array(
-        'methods'         => WP_REST_Server::EDITABLE,
-        'callback'        => array( $this, 'update_item' ),
-        'permission_callback' => array( $this, 'update_item_permissions_check' ),
-        'args'            => $this->get_endpoint_args_for_item_schema( false ),
-      ),
-      array(
-        'methods'  => WP_REST_Server::DELETABLE,
-        'callback' => array( $this, 'delete_item' ),
-        'permission_callback' => array( $this, 'delete_item_permissions_check' ),
-        'args'     => array(
-          'force'    => array(
-            'default'      => false,
-          ),
-        ),
-      ),
-    ) );
-    register_rest_route( $namespace, '/' . $base . '/schema', array(
-      'methods'         => WP_REST_Server::READABLE,
-      'callback'        => array( $this, 'get_public_item_schema' ),
     ) );
   }
- 
+
   /**
    * Get a collection of items
    *
@@ -71,35 +46,17 @@ class Slug_Custom_Route extends WP_REST_Controller {
    * @return WP_Error|WP_REST_Response
    */
   public function get_items( $request ) {
-    $items = array(); //do a query, call another class, etc
-    $data = array();
-    foreach( $items as $item ) {
-      $itemdata = $this->prepare_item_for_response( $item, $request );
-      $data[] = $this->prepare_response_for_collection( $itemdata );
+    $params = $request->get_params();
+    if (isset($params['rid'])) $rids = explode('_', $params['rid']);
+    $radios = scrappy_get_radios($rids);
+    foreach( $radios  as $radio ) {
+      $radiodata = $this->prepare_item_for_response( get_live_song($radio->ID), $request );
+      $data[$radio->ID] = $radiodata;
     }
- 
-    return new WP_REST_Response( $data, 200 );
+    if ($data) return new WP_REST_Response( $data, 200 );
+    return new WP_Error( 'wrong-radio-id', __( 'No such radio ID', '_onair'), array( 'status' => 500 ) );
   }
- 
-  /**
-   * Get one item from the collection
-   *
-   * @param WP_REST_Request $request Full data about the request.
-   * @return WP_Error|WP_REST_Response
-   */
-  public function get_item( $request ) {
-    //get parameters from request
-   $params = $request->get_params();
-    $item = array();//do a query, call another class, etc
-   $data = $this->prepare_item_for_response( $item, $request );
- 
-    //return a response or error based on some conditional
-   if ( 1 == 1 ) {
-      return new WP_REST_Response( $data, 200 );
-    }else{
-      return new WP_Error( 'code', __( 'message', 'text-domain' ) );
-    }
-  }
+
  
   /**
    * Create one item from the collection
@@ -118,7 +75,7 @@ class Slug_Custom_Route extends WP_REST_Controller {
       }
     }
  
-    return new WP_Error( 'cant-create', __( 'message', 'text-domain'), array( 'status' => 500 ) );
+    return new WP_Error( 'cant-create', __( 'message', '_onair'), array( 'status' => 500 ) );
   }
  
   /**
@@ -137,7 +94,7 @@ class Slug_Custom_Route extends WP_REST_Controller {
       }
     }
  
-    return new WP_Error( 'cant-update', __( 'message', 'text-domain'), array( 'status' => 500 ) );
+    return new WP_Error( 'cant-update', __( 'message', '_onair'), array( 'status' => 500 ) );
  
   }
  
@@ -157,7 +114,7 @@ class Slug_Custom_Route extends WP_REST_Controller {
       }
     }
  
-    return new WP_Error( 'cant-delete', __( 'message', 'text-domain'), array( 'status' => 500 ) );
+    return new WP_Error( 'cant-delete', __( 'message', '_onair'), array( 'status' => 500 ) );
   }
  
   /**
@@ -229,7 +186,7 @@ class Slug_Custom_Route extends WP_REST_Controller {
    * @return mixed
    */
   public function prepare_item_for_response( $item, $request ) {
-    return array();
+    return $item;
   }
  
   /**
