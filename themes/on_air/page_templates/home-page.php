@@ -14,7 +14,7 @@ if (evolve_lets_get_sidebar_2() == true):
 endif;
 */
 ?>
-
+<!--
 <div class="row">
   <div class="col-sm-12">
     <h1 class="entry-title">
@@ -26,6 +26,7 @@ endif;
     </h1>
   </div>
 </div>
+-->
 <div class='clearfix'></div>
 <?php
 get_template_part( 'page_templates/components/radio_boxes' );
