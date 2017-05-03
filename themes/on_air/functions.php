@@ -19,24 +19,38 @@ class ReduxFramework_extension_locked {
 /**
  * Loads parent and child themes' style.css
  */
-function orbisius_ctc_evolve_child_theme_enqueue_styles() {
-    $parent_style = 'parent_style';
+function onair_enqueue_assets() {
+    $parent_style = 'evolve';
     $parent_base_dir = 'evolve';
 
     wp_enqueue_style( $parent_style,
-        get_template_directory_uri() . '/style.css',
-        array(),
-        wp_get_theme( $parent_base_dir ) ? wp_get_theme( $parent_base_dir )->get('Version') : ''
+      get_template_directory_uri() . '/style.css',
+      array(),
+      wp_get_theme( $parent_base_dir ) ? wp_get_theme( $parent_base_dir )->get('Version') : ''
     );
 
-    wp_enqueue_style( $parent_style . '_child_style',
-        get_stylesheet_directory_uri() . '/style.css',
-        array( $parent_style ),
-        wp_get_theme()->get('Version')
+    wp_enqueue_style( $parent_style . '_onair_css',
+      get_stylesheet_directory_uri() . '/style.css',
+      array(),
+      wp_get_theme()->get('Version')
     );
+
+    wp_enqueue_style( $parent_style . '_onair_loader',
+      get_stylesheet_directory_uri() . '/assets/loader.css',
+      array(),
+      wp_get_theme()->get('Version')
+    );
+
+    wp_enqueue_script( $parent_style . '_onair_js',
+      get_stylesheet_directory_uri() . '/assets/onair.js',
+      array(),
+      wp_get_theme()->get('Version')
+  );
 }
 
-add_action( 'wp_enqueue_scripts', 'orbisius_ctc_evolve_child_theme_enqueue_styles' );
+add_action( 'wp_enqueue_scripts', 'onair_enqueue_assets' );
+
+
 /* custom menu from custom tax
 $menuname = 'BuddyPress Menu';
 $bpmenulocation = 'primary-menu';

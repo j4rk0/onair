@@ -9,6 +9,18 @@
               <?php the_title()?> <i class="fa fa-chevron-right"></i>
           </a>
       </div>
+      <div class='clearfix'></div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="cssload-conveyor">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
     </div>
 </div>
 
