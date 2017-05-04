@@ -11,13 +11,21 @@
       </div>
       <div class='clearfix'></div>
       <div class="row">
-        <div class="col-sm-12 ajax-onload" data-endpoint="/wp-json/scrappy/v1/live/<?php the_ID(); ?>">
+        <div class="col-sm-12 ajax-onload" data-endpoint="wp-json/scrappy/v1/live/<?php the_ID(); ?>">
           <div class="cssload-conveyor">
             <span></span>
             <span></span>
             <span></span>
             <span></span>
             <span></span>
+          </div>
+          <div class="row result">
+            <div class="col-sm-12 artist">
+                artist
+            </div>
+            <div class="col-sm-12 title">
+                song
+            </div>
           </div>
         </div>
       </div>
