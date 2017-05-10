@@ -11,15 +11,14 @@ jQuery(function($) {
         },
         */
         success:function(data){
-          //$response = ;
           //console.log(Object.keys(data[Object.keys(data)[0]]));
           $.each( Object.keys(data[Object.keys(data)[0]]), function( index, value ) {
-            // console.log( index + ": " + value );
+            //console.log( index + ": " + value );
             element.find('.'+value).text(data[Object.keys(data)[0]][value]);
           });
           element.find('.cssload-conveyor').hide();
           element.find('.result').show();
-//        },
+        },
         error:function(){
           console.log('error' );
         }

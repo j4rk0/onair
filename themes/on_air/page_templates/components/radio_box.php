@@ -10,8 +10,8 @@
           </a>
       </div>
       <div class='clearfix'></div>
-      <div class="row">
-        <div class="col-sm-12 ajax-onload" data-endpoint="wp-json/scrappy/v1/live/<?php the_ID(); ?>">
+      <div class="row radiosong ajax-onload" data-endpoint="wp-json/scrappy/v1/live/<?php the_ID(); ?>">
+        <div class="col-sm-12">
           <div class="cssload-conveyor">
             <span></span>
             <span></span>
@@ -19,12 +19,19 @@
             <span></span>
             <span></span>
           </div>
-          <div class="row result">
-            <div class="col-sm-12 artist">
-                artist
+        </div>
+        <div class="col-sm-12 result">
+          <div class="row">
+            <div class="col-xs-3">
+              song
             </div>
-            <div class="col-sm-12 title">
-                song
+            <div class="col-xs-9">
+              <div class="artist">
+                  artist
+              </div>
+              <div class="title">
+                  song
+              </div>
             </div>
           </div>
         </div>
