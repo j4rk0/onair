@@ -48,7 +48,9 @@ function scrappy_get_radios($id) {
       ),*/
     'meta_key' => 'scrappy_url',
   );
-  if ( $id ) $args['post__in'] = array($id);
+  if ( $id ) {
+    $args['post__in'] = ( is_array($id) ?  $id : array($id));
+  }
   return get_posts( $args );
 }
 

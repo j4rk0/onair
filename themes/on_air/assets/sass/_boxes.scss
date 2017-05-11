@@ -11,6 +11,7 @@
     -webkit-transition: all 0.2s ease-in-out;
     -moz-transition: all 0.2s ease-in-out;
     -o-transition: all 0.2s ease-in-out;
+    font-size: 0.85em;
 }
 .radio-boxes .row {
     padding: 0;
@@ -19,8 +20,8 @@
     min-height: 64px;
     background-position: center;
     background-size: contain;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 0px;
     background-repeat: no-repeat;
     display: block;
     width: 100%;
@@ -34,4 +35,25 @@
     width: 100%;
     font-size: 110%;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+.result {
+    display: none;
+}
+.loader .row,
+.result .row {
+    height: $song-box-height;
+    margin-left: $song-box-margin;
+    margin-right: $song-box-margin;
+    margin-bottom: 10px;
+    background-color: $song-box-background;
+    overflow: hidden;
+}
+.result .artist,
+.result .title {
+    line-height: $song-box-item-height;
+    height: $song-box-item-height;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
