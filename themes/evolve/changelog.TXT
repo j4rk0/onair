@@ -1,3 +1,10 @@
+Version:         3.7.2  
+Date:         5/5/17        
+
+- Updated WooCommerce templates
+- Minor fixes
+
+
 Version:         3.7.1  
 Date:         16/4/17        
 

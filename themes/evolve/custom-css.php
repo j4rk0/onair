@@ -1017,12 +1017,12 @@ ul.nav-menu li {
 
 .menu-header,
 body #header.sticky-header.sticky {
-    background: #' . $evolve_menu_back_color . ';
-    background: url(' . $evolve_template_url . '/assets/images/dark/trans.png) 0px -10px repeat-x, -moz-linear-gradient(center top, #' . $evolve_menu_back_color . ' 20%, #' . evolve_hexDarker($evolve_menu_back_color) . ' 100%);
-    background: url(' . $evolve_template_url . '/assets/images/dark/trans.png) 0px -10px repeat-x, -webkit-gradient(linear, left top, left bottom, color-stop(.2, #' . $evolve_menu_back_color . '), color-stop(1, #' . evolve_hexDarker($evolve_menu_back_color) . '));
-    background: url(' . $evolve_template_url . '/assets/images/dark/trans.png) 0px -10px repeat-x, -o-linear-gradient(top, #' . $evolve_menu_back_color . ', #' . evolve_hexDarker($evolve_menu_back_color) . ');
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#' . $evolve_menu_back_color . '\', endColorstr=\'#' . evolve_hexDarker($evolve_menu_back_color) . '\');
-    border-color: #' . evolve_hexDarker($evolve_menu_back_color) . ';
+        background: #' . $evolve_menu_back_color . ';
+        background: -moz-linear-gradient(top, #'. $evolve_menu_back_color . ' 50%, #' . evolve_hexDarker($evolve_menu_back_color) .' 100%);
+        background: -webkit-linear-gradient(top, #'. $evolve_menu_back_color . ' 50%, #' . evolve_hexDarker($evolve_menu_back_color) .' 100%);
+        background: linear-gradient(to bottom, #'. $evolve_menu_back_color . ' 50%, #' . evolve_hexDarker($evolve_menu_back_color) .' 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=\'#' . $evolve_menu_back_color . '\', endColorstr=\'#' . evolve_hexDarker($evolve_menu_back_color) . '\');
+        border-color: #' . evolve_hexDarker($evolve_menu_back_color) . ';
 }
 
 #wrapper .dd-options,
