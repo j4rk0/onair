@@ -1,10 +1,13 @@
-.cssload-conveyor{
-	position:relative;
-	display:block;
-	margin: 0px auto;
-	width:107px;
+.cssload-conveyor {
+    position: relative;
+    display: block;
+    margin: 0px auto;
+    height: 15px;
+    width: 90.16px;
 }
-	
+.radiosong .cssload-conveyor {
+    margin-top: 12.5px;
+}
 .cssload-conveyor, .cssload-conveyor * {
 	box-sizing: border-box;
 		-o-box-sizing: border-box;

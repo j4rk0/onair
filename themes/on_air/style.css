@@ -21,6 +21,18 @@ Version: 0.1
   -moz-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
   font-size: 0.85em; }
+  .radio-box .badge {
+    position: absolute;
+    top: -8.5px;
+    right: 5%;
+    font-weight: 100; }
+  .radio-box .badge.badge_updated {
+    display: none; }
+  .radio-box .badge.badge_onair {
+    display: none;
+    background-color: #0bb697; }
+  .radio-box .badge.badge_offline {
+    display: none; }
 
 .radio-boxes .row {
   padding: 0; }

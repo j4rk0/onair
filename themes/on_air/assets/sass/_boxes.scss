@@ -12,6 +12,22 @@
     -moz-transition: all 0.2s ease-in-out;
     -o-transition: all 0.2s ease-in-out;
     font-size: 0.85em;
+    .badge {
+        position: absolute;
+        top: -8.5px;
+        right: 5%;
+        font-weight: 100;
+    }
+    .badge.badge_updated {
+        display: none;
+    }
+    .badge.badge_onair {
+        display: none;
+        background-color: #0bb697;
+    }
+    .badge.badge_offline {
+        display: none;
+    }
 }
 .radio-boxes .row {
     padding: 0;

@@ -4,6 +4,9 @@ function get_live_song($radio_id) {
   $start = time();
   
   $inputType = false;
+  
+  $incorrectArtists = array('Informácia o práve hranej pesničke','Na tomto rádiu práve');
+  $incorrectTitles = array('je dočasne nedostupná','nehrá žiadna pesnička');
 
   foreach (get_post_meta($radio_id) as $key => $value) {
     // Looking for keys (meta fields) with prefix 'crappy_field'
@@ -61,9 +64,7 @@ function get_live_song($radio_id) {
   if (isset($return['title']) && substr($return['title'], 0, 2) == '- ') $return['title'] = substr($return['title'], 2);
   if(isset($return['start_time'])) $return['start_time'] = scrappy_dateToTimestamp($return['start_time']);
 
-  if(!empty($return['artist']) && !empty($return['title'])){
-    //$corrected = get_corrected_name($return);
-    //if(!empty($return['artist']) && !empty($return['title']) && !empty($corrected)) $return['corrected'] = get_corrected_name($return);
+  if(!empty($return['artist']) && !empty($return['title']) && !in_array($return['artist'], $incorrectArtists) && !in_array($return['title'], $incorrectTitles)){
     $return['playing'] = TRUE;
   }
   $return['working_time'] = time() - $start;

@@ -13,30 +13,15 @@
       </div>
       <div class='clearfix'></div>
       <div class="row radiosong ajax-onload" data-endpoint="wp-json/scrappy/v1/live/<?php the_ID(); ?>">
+        <?php get_template_part( 'page_templates/components/badges' );?>
         <div class="col-sm-12 loader">
-          <div class="row">  
-            <div class="cssload-conveyor">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
+          <div class="row">
+              <?php get_template_part( 'page_templates/components/loader' );?>
           </div>
         </div>
         <div class="col-sm-12 result">
           <div class="row">
-            <div class="col-xs-3">
-              image
-            </div>
-            <div class="col-xs-9">
-              <div class="artist">
-                  artist
-              </div>
-              <div class="title">
-                  song
-              </div>
-            </div>
+              <?php get_template_part( 'page_templates/components/song_box' );?>
           </div>
         </div>
       </div>
