@@ -1,5 +1,5 @@
 jQuery(function ($) {
-    var $sucessRepeatTimeout = 5000;
+    var $sucessRepeatTimeout = 7000;
     var $errorRepeatTimeout = 20000;
     var $badgeAnimationDuration = 800;
 
@@ -28,15 +28,13 @@ jQuery(function ($) {
                                 console.log('item: '+$item.text());
                                 console.log('value: '+myValue);
                                 $item.text(myValue).prop('title', myValue);
-                                element.find('.badge_loading').hide();
-                                element.find('.badge_onair').hide();
+                                element.find('.badge').hide();
                                 element.find('.badge_updated').fadeIn($badgeAnimationDuration);
                                 element.find('.loader').hide();
                                 element.find('.result').show();
                             }
                             else {
-                                element.find('.badge_updated').hide();
-                                element.find('.badge_loading').hide();
+                                element.find('.badge').not('.badge_onair').hide();
                                 element.find('.badge_onair').fadeIn($badgeAnimationDuration);
                             }
                         }

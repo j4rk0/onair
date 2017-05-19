@@ -1,4 +1,4 @@
-<div class="col-sm-6 col-md-4 col-lg-3">
+<div class="col-lg-3 col-md-4 col-sm-6  col-xs-12">
     <div class="radio-box">
       <!--<i class="fa fa-cube"></i>-->
       <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>" class="radio-logo" style="background-image: url(<?php echo get_the_post_thumbnail_url(get_the_ID(),'thumbnail');?>)">
