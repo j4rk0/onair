@@ -62,7 +62,6 @@ jQuery(function ($) {
     }
     $(document).ready(function () {
         $('.ajax-onload').each(function (index) {
-            //console.log( index + ": " + $( this ).data('endpoint') );
             getAjax('GET', $(this));
         });
     });

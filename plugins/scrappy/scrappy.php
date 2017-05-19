@@ -16,10 +16,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define('SCRAPPY_DIR', WP_PLUGIN_DIR . '/scrappy');
+define('SCRAPPY_LASTFM_API_KEY', 'ec09b194f6246092d4c38bf029fe0893');
+define('UNIDELIM', '*/|/*');
+
 
 require_once SCRAPPY_DIR.'/api/scrappyAPI.php';
 require_once SCRAPPY_DIR.'/api/scrappyParser.php';
-require_once SCRAPPY_DIR.'/api/scrappyRest.php';
+//require_once SCRAPPY_DIR.'/api/scrappyRest.php';
+require_once SCRAPPY_DIR.'/helpers/scrappyHelpers.php';
 
 // REST API hook for custom endpoint.
 add_action( 'rest_api_init', 'register_rest_link_routes' );
@@ -29,7 +33,7 @@ add_action( 'rest_api_init', 'register_rest_link_routes' );
  * @since 2.0.0
  */
 function register_rest_link_routes() {
-  require_once SCRAPPY_DIR.'/api/scrappyRest.php';
+  require_once SCRAPPY_DIR.'/api/scrappyAPI.php';
 	$link_controller = new Slug_Custom_Route();
 	$link_controller->register_routes('scrappy');
 }

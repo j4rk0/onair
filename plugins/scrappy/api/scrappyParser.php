@@ -17,6 +17,7 @@ function get_live_song($radio_id) {
   $return['radio_id'] = $radio_id;
   $return['scrappy_url'] = $scrappy_url;
   $return['scrappy_link'] = '<a href="'.$scrappy_url.'">'.$scrappy_url.'</a>';
+  
   // Getting remote content
   $inputText = file_get_contents($scrappy_url);
 
