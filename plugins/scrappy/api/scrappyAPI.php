@@ -33,6 +33,11 @@ class Slug_Custom_Route extends WP_REST_Controller {
         'methods'         => WP_REST_Server::READABLE,
         'callback'        => array( $this, 'get_items' ),
         'permission_callback' => array( $this, 'get_items_permissions_check' ),
+        'args'            => array(
+          'getimages'          => array(
+            'default'      => FALSE,
+          ),
+        ),
       ),
     ) );
     // for last fm queries
@@ -70,7 +75,7 @@ class Slug_Custom_Route extends WP_REST_Controller {
     if (isset($params['rid'])) $rids = explode('_', $params['rid']);
     $radios = scrappy_get_radios($rids);
     foreach( $radios  as $radio ) {
-      $radiodata = $this->prepare_item_for_response( get_live_song($radio->ID), $request );
+      $radiodata = $this->prepare_item_for_response( get_live_song($radio->ID, $params['getimages']), $request );
       $data[$radio->ID] = $radiodata;
     }
     if ($data) return new WP_REST_Response( $data, 200 );

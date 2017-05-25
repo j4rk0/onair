@@ -1,7 +1,7 @@
 jQuery(function ($) {
-    var $sucessRepeatTimeout = 7000;
-    var $errorRepeatTimeout = 20000;
-    var $badgeAnimationDuration = 800;
+    var sucessRepeatTimeout = 7000;
+    var errorRepeatTimeout = 20000;
+    var badgeAnimationDuration = 800;
 
     function getAjax(type, element) {
         $.ajax({
@@ -18,37 +18,43 @@ jQuery(function ($) {
                 //console.log(Object.keys(data[Object.keys(data)[0]]));
                 //console.log(data[Object.keys(data)[0]].playing);
                 var myData = data[Object.keys(data)[0]];
-                if(myData.playing && myData.playing !== undefined) {
+                // Radio is playing song
+                if (myData.playing && myData.playing !== undefined) {
                     // putting values to coresponding dom elements if they exist
                     $.each(Object.keys(data[Object.keys(data)[0]]), function (index, value) {
                         var myValue = myData[value];
                         $item = element.find('.' + value);
-                        if ( $item.length && myValue) {
-                            if ( $item.text() !== myValue ) {
-                                console.log('item: '+$item.text());
-                                console.log('value: '+myValue);
-                                $item.text(myValue).prop('title', myValue);
+                        if ($item.length && myValue) {
+                            if ($item.text() !== myValue) {
+                                //console.log('item: '+$item.text());
+                                //console.log('value: '+myValue);
+
+                                $item.text(myValue).prop($item.data('updateprop'), myValue);
+                                //console.log($item.data('updateprop'));
+
+
                                 element.find('.badge').hide();
-                                element.find('.badge_updated').fadeIn($badgeAnimationDuration);
+                                element.find('.badge_updated').fadeIn(badgeAnimationDuration);
                                 element.find('.loader').hide();
                                 element.find('.result').show();
                             }
                             else {
                                 element.find('.badge').not('.badge_onair').hide();
-                                element.find('.badge_onair').fadeIn($badgeAnimationDuration);
+                                element.find('.badge_onair').fadeIn(badgeAnimationDuration);
                             }
                         }
                     });
                 }
+                // Radio currently doesn't play any song
                 else {
                     element.find('.badge_loading').hide();
-                    element.find('.badge_offline').fadeIn($badgeAnimationDuration);
+                    element.find('.badge_offline').fadeIn(badgeAnimationDuration);
                     element.find('.loader').show();
                     element.find('.result').hide();
                 }
                 setTimeout(function () {
                     getAjax(type, element);
-                }, $sucessRepeatTimeout);
+                }, sucessRepeatTimeout);
             },
             error: function () {
                 console.log('error - called:' + element.data('endpoint'));
@@ -56,7 +62,7 @@ jQuery(function ($) {
                 element.find('.title').text('');
                 setTimeout(function () {
                     getAjax(type, element);
-                }, $errorRepeatTimeout);
+                }, errorRepeatTimeout);
             }
         });
     }
