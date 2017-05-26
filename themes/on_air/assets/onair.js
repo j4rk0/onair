@@ -1,6 +1,6 @@
 jQuery(function ($) {
-    var sucessRepeatTimeout = 7000;
-    var errorRepeatTimeout = 20000;
+    var sucessRepeatTimeout = 4000;
+    var errorRepeatTimeout = 1000;
     var badgeAnimationDuration = 800;
 
     function getAjax(type, element) {
@@ -28,11 +28,8 @@ jQuery(function ($) {
                             if ($item.text() !== myValue) {
                                 //console.log('item: '+$item.text());
                                 //console.log('value: '+myValue);
-
                                 $item.text(myValue).prop($item.data('updateprop'), myValue);
                                 //console.log($item.data('updateprop'));
-
-
                                 element.find('.badge').hide();
                                 element.find('.badge_updated').fadeIn(badgeAnimationDuration);
                                 element.find('.loader').hide();

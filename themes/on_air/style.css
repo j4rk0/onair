@@ -34,9 +34,10 @@ Version: 0.1
   .radio-box .badge.badge_offline {
     display: none; }
   .radio-box .image {
-    font-size: 2em;
     vertical-align: middle;
     line-height: 40px; }
+  .radio-box .image img {
+    display: inline-block; }
 
 .radio-boxes .row {
   padding: 0; }
