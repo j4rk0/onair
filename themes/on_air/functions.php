@@ -35,12 +35,12 @@ function onair_enqueue_assets() {
       wp_get_theme()->get('Version')
     );
 
-    wp_enqueue_style( $parent_style . '_onair_loader',
+/*    wp_enqueue_style( $parent_style . '_onair_loader',
       get_stylesheet_directory_uri() . '/assets/loader.css',
       array(),
       wp_get_theme()->get('Version')
     );
-
+*/
     wp_enqueue_script( $parent_style . '_onair_js',
       get_stylesheet_directory_uri() . '/assets/onair.js',
       array(),

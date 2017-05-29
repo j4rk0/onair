@@ -1,0 +1,3 @@
+[submodule "themes/on_air/assets/lightbox"]
+	path = themes/on_air/assets/lightbox
+	url = https://github.com/ashleydw/lightbox
