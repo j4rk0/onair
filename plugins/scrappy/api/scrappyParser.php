@@ -81,6 +81,10 @@ function get_live_song($radio_id, $getimages = FALSE) {
 			$return = array_merge($return, getImages($return['artist'], $return['title']));
 		}
 	}
+	else {
+		$return['playing'] = FALSE;
+		unset($return['artist'],$return['title']);
+	}
 	$return['working_time'] = time() - $start;
 
 	return $return;

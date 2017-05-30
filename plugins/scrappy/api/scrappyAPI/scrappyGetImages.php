@@ -2,28 +2,58 @@
 
 // Getting images by Last FM API
 function getImages($artist, $track) {
-	$url = 'http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=' . SCRAPPY_LASTFM_API_KEY . '&artist=' . urlencode($artist) . '&track=' . urlencode($track) . '&format=json';
-	$json = file_get_contents($url);
 
-	if (isset(json_decode($json)->track->album->image, $artist, $track)) {
-		foreach (json_decode($json)->track->album->image as $image) {
+	function get_lastfm_images($artist, $track, $method = 'track.getInfo', $echo = FALSE) {
+
+		$url = 'http://ws.audioscrobbler.com/2.0/?method=' . $method . '&api_key=' . SCRAPPY_LASTFM_API_KEY . '&artist=' . urlencode($artist) . '&track=' . urlencode($track) . '&format=json';
+		if ($echo) {
+			echo $url;
+			exit;
+		}
+		return json_decode(file_get_contents($url));
+	}
+
+	function reverse_name($artist, $delimiter = ' ') {
+		$array = explode($delimiter, $artist);
+		if (count($array) == 2) {
+			return implode($delimiter, array_reverse($array));
+		}
+		else
+			return FALSE;
+	}
+
+	function extract_images($lfimages) {
+		foreach ($lfimages as $image) {
 			$images['image_' . $image->size] = $image->{'#text'};
 		}
 		return $images;
 	}
-	// Track method did not return any data or no images, we try once again with artist method. Not so accurate but more often succesfull.
-	else {
-		$url = 'http://ws.audioscrobbler.com/2.0/?method=artist.getInfo&api_key=' . SCRAPPY_LASTFM_API_KEY . '&artist=' . urlencode($artist) . '&format=json';
-		$json = file_get_contents($url);
-		if (isset(json_decode($json)->artist->image, $artist)) {
-			foreach (json_decode($json)->artist->image as $image) {
-				$images['image_' . $image->size] = $image->{'#text'};
-			}
-			return $images;
-		}
-		else
-			return [];
-	}
-}
 
-?>
+	if (isset(get_lastfm_images($artist, $track)->track->album->image[0]->{'#text'}))
+		return array_merge(extract_images(get_lastfm_images($artist, $track)->track->album->image), array('method' => 'track.getInfo'));
+	elseif (isset(get_lastfm_images($artist, $track, 'track.search')->results->trackmatches->track[0]->image[0]->{'#text'})) {
+		$result = get_lastfm_images($artist, $track, 'track.search')->results->trackmatches->track[0];
+		return array_merge(
+				extract_images($result->image),
+				array(
+					'method' => 'track.search',
+					'artist' => $result->artist,
+					'title' => $result->name,
+					)
+		);
+	}
+	elseif (isset(get_lastfm_images($artist, $track, 'artist.getInfo')->artist->image[0]->{'#text'}))
+		return array_merge(extract_images(get_lastfm_images($artist, $track, 'artist.getInfo')->artist->image), array('method' => 'artist.getInfo'));
+	elseif (isset(get_lastfm_images($artist, $track, 'artist.search')->results->artistmatches->artist[0]->image[0]->{'#text'})) {
+		$result = get_lastfm_images($artist, $track, 'artist.search')->results->trackmatches->artist[0];
+		return array_merge(
+						extract_images($result->image),
+						array(
+							'method' => 'artist.search',
+							'artist' => $result->name
+							)
+		);
+	}
+	else
+		return [];
+}
