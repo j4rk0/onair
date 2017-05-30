@@ -1,7 +1,7 @@
 <div class="col-lg-3 col-md-4 col-sm-6  col-xs-12">
     <div class="radio-box">
       <!--<i class="fa fa-cube"></i>-->
-				<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>" class="radio-logo" style="background-image: url(<?php echo get_the_post_thumbnail_url(get_the_ID(), 'thumbnail'); ?>)">
+				<a href="<?php //the_permalink(); ?>" title="<?php the_title_attribute(); ?>" class="radio-logo" style="background-image: url(<?php echo get_the_post_thumbnail_url(get_the_ID(), 'thumbnail'); ?>)">
 				</a>
 				<!--<h2><?php the_title() ?></h2>-->
 				<div class="radio-button">
@@ -22,6 +22,9 @@
 						<div class="col-sm-12 result">
 								<div class="row">
 										<?php get_template_part('page_templates/components/song_box'); ?>
+								</div>
+								<div class="row image_method">
+										method
 								</div>
 						</div>
 				</div>

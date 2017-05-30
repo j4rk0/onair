@@ -29,31 +29,75 @@ function getImages($artist, $track) {
 		return $images;
 	}
 
-	if (isset(get_lastfm_images($artist, $track)->track->album->image[0]->{'#text'}))
-		return array_merge(extract_images(get_lastfm_images($artist, $track)->track->album->image), array('method' => 'track.getInfo'));
-	elseif (isset(get_lastfm_images($artist, $track, 'track.search')->results->trackmatches->track[0]->image[0]->{'#text'})) {
-		$result = get_lastfm_images($artist, $track, 'track.search')->results->trackmatches->track[0];
-		return array_merge(
-				extract_images($result->image),
-				array(
-					'method' => 'track.search',
-					'artist' => $result->artist,
-					'title' => $result->name,
-					)
-		);
+	$return['original_data']['title'] = $track;
+	$return['original_data']['artist'] = $artist;
+
+	// to be removed eventually, radios are giving messed titles
+	$result = get_lastfm_images($artist, $track);
+
+	if (isset($result->track->name)) {
+		$return['image_method'] ='track.getInfo';
+		$track = $result->track->name;
+		$artist = $result->track->artist->name;
+		$return['artist'] = $artist;
+		$return['title'] = $track;
 	}
-	elseif (isset(get_lastfm_images($artist, $track, 'artist.getInfo')->artist->image[0]->{'#text'}))
-		return array_merge(extract_images(get_lastfm_images($artist, $track, 'artist.getInfo')->artist->image), array('method' => 'artist.getInfo'));
-	elseif (isset(get_lastfm_images($artist, $track, 'artist.search')->results->artistmatches->artist[0]->image[0]->{'#text'})) {
-		$result = get_lastfm_images($artist, $track, 'artist.search')->results->trackmatches->artist[0];
-		return array_merge(
-						extract_images($result->image),
+
+	if (isset($result->track->album->image)) {
+		if (!empty($result->track->album->image[0]->{'#text'})) return array_merge(extract_images($result->track->album->image), $return);
+	}
+
+	$result = get_lastfm_images($artist, $track, 'track.search')->results->trackmatches->track;
+	if (is_array($result)) {
+		if(isset($result[0]->name, $result[0]->artist)){
+			$return['image_method'] ='track.search';
+			$track = $result[0]->name;
+			$artist = $result[0]->artist;
+		}
+		foreach ($result as $r) {
+			if (!empty($r->image[0]->{'#text'})) {
+				return array_merge(
+						extract_images($r->image),
 						array(
-							'method' => 'artist.search',
-							'artist' => $result->name
-							)
-		);
+							'artist' => $r->artist,
+							'title' => $r->name,
+							),
+						$return
+				);
+			}
+		}
 	}
-	else
-		return [];
+
+	// to be removed eventually
+	$result = get_lastfm_images($artist, $track, 'artist.getInfo');
+	if (isset($result->artist->name)) {
+		$artist = $result->artist->name;
+		$return['artist'] = $artist;
+	}
+	if (isset($result->artist->image)) {
+		if (!empty($result->artist->image[0]->{'#text'})) {
+			return array_merge(extract_images(get_lastfm_images($artist, $track, 'artist.getInfo')->artist->image), array('image_method' => 'artist.getInfo'), $return);
+		}
+	}
+
+	$result = get_lastfm_images($artist, $track, 'artist.search')->results->artistmatches->artist;
+	if (isset($result->artist->name)) {
+		$return['artist'] = $artist;
+	}
+	if (is_array($result)) {
+		foreach ($result as $r) {
+			if (!empty($r->image[0]->{'#text'})) {
+				return array_merge(
+								extract_images($r->image),
+								array(
+									'image_method' => 'artist.search',
+									'artist' => $r->name
+									),
+								$return
+				);
+			}
+		}
+	}
+
+	return $return;
 }

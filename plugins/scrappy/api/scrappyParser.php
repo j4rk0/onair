@@ -75,6 +75,7 @@ function get_live_song($radio_id, $getimages = FALSE) {
 
 	// check whenever the radio currently plays a song
 	if (!empty($return['artist']) && !empty($return['title']) && !in_array($return['artist'], $incorrectArtists) && !in_array($return['title'], $incorrectTitles)) {
+		$return['title'] = str_replace(array(' - NOVINKA'), array(''), $return['title']);
 		$return['playing'] = TRUE;
 		if ($getimages) {
 			require_once 'scrappyAPI/scrappyGetImages.php';
