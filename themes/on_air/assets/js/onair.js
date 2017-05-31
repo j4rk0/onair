@@ -28,16 +28,21 @@ jQuery(function ($) {
                             if ($item.text() !== myValue) {
                                 //console.log('item: '+$item.text());
                                 //console.log('value: '+myValue);
-                                $item.text(myValue).prop($item.data('updateprop'), myValue);
+                                $item.prop($item.data('updateprop'), myValue);
+                                if ($item.data('updatetext')) {
+                                   $item.text(myValue);
+                                   element.find('.badge').hide();
+                                   element.find('.badge_updated').fadeIn(badgeAnimationDuration);
+                                   element.find('.loader').hide();
+                                   element.find('.result').show();
+                                }
                                 //console.log($item.data('updateprop'));
-                                element.find('.badge').hide();
-                                element.find('.badge_updated').fadeIn(badgeAnimationDuration);
-                                element.find('.loader').hide();
-                                element.find('.result').show();
+
                             }
                             else {
-                                element.find('.badge').not('.badge_onair').hide();
-                                element.find('.badge_onair').fadeIn(badgeAnimationDuration);
+                                element.find('.badge').hide();
+                                element.find('.badge_onair').show();
+                                //element.find('.badge_onair').fadeIn(badgeAnimationDuration);
                             }
                         }
                     });
@@ -63,9 +68,14 @@ jQuery(function ($) {
             }
         });
     }
+    
+    //ajaxify songs
     $(document).ready(function () {
         $('.ajax-onload').each(function (index) {
             getAjax('GET', $(this));
         });
+    }).on('click', '[data-toggle="lightbox"]', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox();
     });
 });

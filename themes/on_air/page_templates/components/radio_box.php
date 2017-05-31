@@ -23,9 +23,6 @@
 								<div class="row">
 										<?php get_template_part('page_templates/components/song_box'); ?>
 								</div>
-								<div class="row image_method">
-										method
-								</div>
 						</div>
 				</div>
     </div>

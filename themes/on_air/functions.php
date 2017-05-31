@@ -41,8 +41,15 @@ function onair_enqueue_assets() {
       wp_get_theme()->get('Version')
     );
 */
+		wp_enqueue_script( $parent_style . '_ekko_lightbox',
+			get_stylesheet_directory_uri() . '/assets/js/ekko-lightbox.min.js',
+      get_stylesheet_directory_uri() . '/assets/js/ekko-lightbox.min.js',
+      array(),
+      wp_get_theme()->get('Version')
+		);
     wp_enqueue_script( $parent_style . '_onair_js',
-      get_stylesheet_directory_uri() . '/assets/onair.js',
+			get_stylesheet_directory_uri() . '/assets/js/onair.js',
+      get_stylesheet_directory_uri() . '/assets/js/onair.js',
       array(),
       wp_get_theme()->get('Version')
   );

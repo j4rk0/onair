@@ -36,7 +36,7 @@ function getImages($artist, $track) {
 	$result = get_lastfm_images($artist, $track);
 
 	if (isset($result->track->name)) {
-		$return['image_method'] ='track.getInfo';
+		$return['image_method'] = 'track.getInfo';
 		$track = $result->track->name;
 		$artist = $result->track->artist->name;
 		$return['artist'] = $artist;
@@ -44,26 +44,22 @@ function getImages($artist, $track) {
 	}
 
 	if (isset($result->track->album->image)) {
-		if (!empty($result->track->album->image[0]->{'#text'})) return array_merge(extract_images($result->track->album->image), $return);
+		if (!empty($result->track->album->image[0]->{'#text'}))
+			return array_merge(extract_images($result->track->album->image), $return);
 	}
 
 	$result = get_lastfm_images($artist, $track, 'track.search')->results->trackmatches->track;
 	if (is_array($result)) {
-		if(isset($result[0]->name, $result[0]->artist)){
-			$return['image_method'] ='track.search';
+		if (isset($result[0]->name, $result[0]->artist)) {
+			$return['image_method'] = 'track.search';
 			$track = $result[0]->name;
 			$artist = $result[0]->artist;
 		}
 		foreach ($result as $r) {
 			if (!empty($r->image[0]->{'#text'})) {
-				return array_merge(
-						extract_images($r->image),
-						array(
-							'artist' => $r->artist,
-							'title' => $r->name,
-							),
-						$return
-				);
+				$return['artist'] = $r->artist;
+				$return['title'] = $r->name;
+				return array_merge( extract_images($r->image), $return);
 			}
 		}
 	}
@@ -87,17 +83,11 @@ function getImages($artist, $track) {
 	if (is_array($result)) {
 		foreach ($result as $r) {
 			if (!empty($r->image[0]->{'#text'})) {
-				return array_merge(
-								extract_images($r->image),
-								array(
-									'image_method' => 'artist.search',
-									'artist' => $r->name
-									),
-								$return
-				);
+				$return['image_method'] = 'artist.search';
+				$return['artist'] = $r->name;
+				return array_merge(extract_images($r->image), $return);
 			}
 		}
 	}
-
 	return $return;
 }
