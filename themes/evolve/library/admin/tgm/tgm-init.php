@@ -13,7 +13,7 @@ function evolve_register_suggested_plugins() {
             'name' => 'Redux Framework', // The plugin name
             'slug' => 'redux-framework', // The plugin slug (typically the folder name)
             'required' => false, // If false, the plugin is only 'recommended' instead of required
-            'version' => '3.6.3', // E.g. 1.0.0. If set, the active plugin must be this version or higher, otherwise a notice is presented
+            'version' => '3.6.5', // E.g. 1.0.0. If set, the active plugin must be this version or higher, otherwise a notice is presented
             'force_activation' => false, // If true, plugin is activated upon theme activation and cannot be deactivated until theme switch
             'force_deactivation' => false, // If true, plugin is deactivated upon theme switch, useful for theme-specific plugins
         ),

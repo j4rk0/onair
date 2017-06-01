@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * any later version.
- *
  * Redux Framework is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with Redux Framework. If not, see <http://www.gnu.org/licenses/>.
  *
@@ -40,16 +38,18 @@ if( !class_exists( 'ReduxFramework_color_rgba' ) ) {
        *
        * @since       1.0.0
        * @access      public
+       *
        * @param       array $field Field sections.
        * @param       array $value Values.
        * @param       array $parent Parent object.
+       *
        * @return      void
        */
         public function __construct( $field = array(), $value ='', $parent ) {
 
             // Set required variables
             $this->parent   = $parent;
-            $this->field    = $field;
+            $this->field  = (array) $field;
             $this->value    = $value;
 
             $defaults = array(
@@ -58,23 +58,27 @@ if( !class_exists( 'ReduxFramework_color_rgba' ) ) {
                 'rgba'      => ''
             );
 
+                $option_defaults = array(
+                    "show_input"             => true,
+                    "show_initial"           => false,
+                    "show_alpha"             => true,
+                    "show_palette"           => false,
+                    "show_palette_only"      => false,
+                    "max_palette_size"       => 10,
+                    "show_selection_palette" => false,
+                    "allow_empty"            => true,
+                    "clickout_fires_change"  => false,
+                    "choose_text"            => __( 'Choose', 'evolve' ),
+                    "cancel_text"            => __( 'Cancel', 'evolve' ),
+                    "show_buttons"           => true,
+                    "input_text"             => __( 'Select Color', 'evolve' ),
+                    "palette"                => null,
+                );
+
             $this->value = wp_parse_args( $this->value, $defaults );
 
-            $this->field['options']['show_input']              = isset($this->field['options']['show_input']) ? $this->field['options']['show_input'] : true;
-            $this->field['options']['show_initial']            = isset($this->field['options']['show_initial']) ? $this->field['options']['show_initial'] : false;
-            $this->field['options']['show_alpha']              = isset($this->field['options']['show_alpha']) ? $this->field['options']['show_alpha'] : true;
-            $this->field['options']['show_palette']            = isset($this->field['options']['show_palette']) ? $this->field['options']['show_palette'] : false;
-            $this->field['options']['show_palette_only']       = isset($this->field['options']['show_palette_only']) ? $this->field['options']['show_palette_only'] : false;
-            $this->field['options']['max_palette_size']        = isset($this->field['options']['max_palette_size']) ? $this->field['options']['max_palette_size'] : 10;
-            $this->field['options']['show_selection_palette']  = isset($this->field['options']['show_selection_palette']) ? $this->field['options']['show_selection_palette'] : false;
-            $this->field['options']['allow_empty']             = isset($this->field['options']['allow_empty']) ? $this->field['options']['allow_empty'] : true;
-            $this->field['options']['clickout_fires_change']   = isset($this->field['options']['clickout_fires_change']) ? $this->field['options']['clickout_fires_change'] : false;
-            $this->field['options']['choose_text']             = isset($this->field['options']['choose_text']) ? $this->field['options']['choose_text'] : 'Choose';
-            $this->field['options']['cancel_text']             = isset($this->field['options']['cancel_text']) ? $this->field['options']['cancel_text'] : 'Cancel';
-            $this->field['options']['show_buttons']            = isset($this->field['options']['show_buttons']) ? $this->field['options']['show_buttons'] : true;
-            $this->field['options']['palette']                 = isset($this->field['options']['palette']) ? $this->field['options']['palette'] : null;
-            $this->field['options']['input_text']              = isset($this->field['options']['input_text']) ? $this->field['options']['input_text'] : 'Select Color';
-            
+            $this->field['options'] = isset( $this->field['options'] ) ? wp_parse_args( $this->field['options'], $option_defaults ) : $option_defaults;
+           
             // Convert empty array to null, if there.
             $this->field['options']['palette']                 = empty($this->field['options']['palette']) ? null : $this->field['options']['palette'];
             
@@ -84,7 +88,6 @@ if( !class_exists( 'ReduxFramework_color_rgba' ) ) {
         
         /**
          * Field Render Function.
-         *
          * Takes the vars and outputs the HTML for the field in the settings
          *
          * @since       1.0.0
@@ -174,7 +177,6 @@ if( !class_exists( 'ReduxFramework_color_rgba' ) ) {
         
         /**
          * Enqueue Function.
-         *
          * If this field requires any scripts, or css define this function and register/enqueue the scripts/css
          *
          * @since       1.0.0
@@ -217,7 +219,6 @@ if( !class_exists( 'ReduxFramework_color_rgba' ) ) {
 
         /**
          * getColorVal.  Returns formatted color val in hex or rgba.
-         *
          * If this field requires any scripts, or css define this function and register/enqueue the scripts/css
          *
          * @since       1.0.0
@@ -259,7 +260,6 @@ if( !class_exists( 'ReduxFramework_color_rgba' ) ) {
         
         /**
          * Output Function.
-         *
          * Used to enqueue to the front-end
          *
          * @since       1.0.0

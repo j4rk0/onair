@@ -555,6 +555,10 @@
                             'type'           => 'redux-' . $option['type'],
                             'field'          => $option,
                             'ReduxFramework' => $this->parent,
+                            'active_callback' => ( isset( $option['required'] ) && class_exists( 'Redux_Customizer_Active_Callback' ) ) ? array(
+                                'Redux_Customizer_Active_Callback',
+                                'evaluate'
+                            ) : '__return_true',
                             'priority'       => $option['priority'],
                         ) ) );
 

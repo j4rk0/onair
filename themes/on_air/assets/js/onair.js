@@ -1,6 +1,6 @@
 jQuery(function ($) {
-    var sucessRepeatTimeout = 4000;
-    var errorRepeatTimeout = 1000;
+    var sucessRepeatTimeout = 12000;
+    var errorRepeatTimeout = 5000;
     var badgeAnimationDuration = 800;
 
     function getAjax(type, element) {

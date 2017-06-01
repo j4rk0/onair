@@ -90,7 +90,11 @@
             validOpts = ['checkboxUncheckedValue', 'parseNumbers', 'parseBooleans', 'parseNulls', 'parseAll', 'parseWithFunction', 'customTypes', 'defaultTypes', 'useIntKeysAsArrayIndex']; // re-define because the user may override the defaultOptions
             for ( opt in options ) {
                 if ( validOpts.indexOf( opt ) === -1 ) {
-                    throw new Error( "serializeJSON ERROR: invalid option '" + opt + "'. Please use one of " + validOpts.join( ', ' ) );
+					throw new Error(
+                        "serializeJSON ERROR: invalid option '" + opt + "'. Please use one of " + validOpts.join(
+                            ', '
+                        )
+                    );
                 }
             }
 
@@ -202,7 +206,11 @@
                 if ( validTypes.indexOf( match[2] ) !== -1 ) {
                     return [match[1], match[2]];
                 } else {
-                    throw new Error( "serializeJSON ERROR: Invalid type " + match[2] + " found in input name '" + name + "', please use one of " + validTypes.join( ', ' ) )
+                    throw new Error(
+                        "serializeJSON ERROR: Invalid type " + match[2] + " found in input name '" + name + "', please use one of " + validTypes.join(
+                            ', '
+                        )
+                    )
                 }
             } else {
                 return [name, '_']; // no defined type, then use parse options
@@ -335,8 +343,22 @@
                 $.redux.initFields();
             }
         );
+
+        redux.args.disable_save_warn = true;
+        var reduxChange = redux_change;
+        redux_change = function( variable ) {
+            variable = $( variable );
+            reduxChange.apply( this, arguments );
+            redux.customizer.save( variable )
+        };
+
+        var redux_initFields = $.redux.initFields;
+        $.redux.initFiles = function() {
+            redux_initFields();
+        }
     };
-    redux.customizer.save = function( $obj, $container ) {
+
+    redux.customizer.save = function( $obj ) {
         var $parent = $obj.hasClass( 'redux-field' ) ? $obj : $obj.parents( '.redux-field-container:first' );
         redux.customizer.inputSave( $parent );
     };
@@ -369,7 +391,10 @@
 
         var $control = wp.customize.control( $id );
 
+        // Customizer hack since they didn't code it to save order...
+        if ( JSON.stringify( $control.setting._value ) !== JSON.stringify( $nData ) ) {
+            $control.setting._value = null;
+        }
         $control.setting.set( $nData );
-
     }
 })( jQuery );

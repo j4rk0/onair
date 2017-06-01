@@ -92,7 +92,9 @@
                 $sortlists = $this->value;
                 if ( ! empty( $sortlists ) ) {
                     foreach ( $sortlists as $section => $arr ) {
-                        $sortlists[ $section ] = $this->replace_id_with_slug( $arr );
+                        $arr = $this->replace_id_with_slug( $arr );
+                        $sortlists[ $section ] = $arr;
+                        $this->value[$section] = $arr;
                     }
                 }
 

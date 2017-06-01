@@ -6,8 +6,8 @@ function get_live_song($radio_id, $getimages = FALSE) {
 
 	$inputType = false;
 
-	$incorrectArtists = array('Informácia o práve hranej pesničke', 'Na tomto rádiu práve','Baví nás baviť vás');
-	$incorrectTitles = array('je dočasne nedostupná', 'nehrá žiadna pesnička','Baví nás baviť vás');
+	$incorrectArtists = array('Informácia o práve hranej pesničke', 'Na tomto rádiu práve', 'Baví nás baviť vás');
+	$incorrectTitles = array('je dočasne nedostupná', 'nehrá žiadna pesnička', 'Baví nás baviť vás');
 
 	foreach (get_post_meta($radio_id) as $key => $value) {
 		// Looking for keys (meta fields) with prefix 'crappy_field'
@@ -32,7 +32,7 @@ function get_live_song($radio_id, $getimages = FALSE) {
 	$inputType = (scrappy_isJson($inputText)) ? 'json' : 'html';
 
 	// Radio has not set proper values to parse, exit
-	if (!isset($fields))
+	if (!isset($fields) || !$inputText)
 		return;
 
 	$return['source_type'] = $inputType;
@@ -84,7 +84,7 @@ function get_live_song($radio_id, $getimages = FALSE) {
 	}
 	else {
 		$return['playing'] = FALSE;
-		unset($return['artist'],$return['title']);
+		unset($return['artist'], $return['title']);
 	}
 	$return['working_time'] = time() - $start;
 

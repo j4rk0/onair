@@ -512,6 +512,7 @@
 
             public static function checkExtensionClassFile( $opt_name, $name = "", $class_file = "", $instance = "" ) {
                 if ( file_exists( $class_file ) ) {
+
                     self::$uses_extensions[ $opt_name ] = isset( self::$uses_extensions[ $opt_name ] ) ? self::$uses_extensions[ $opt_name ] : array();
                     if ( ! in_array( $name, self::$uses_extensions[ $opt_name ] ) ) {
                         self::$uses_extensions[ $opt_name ][] = $name;
@@ -525,6 +526,11 @@
                         }
                     }
                     self::$extensions[ $name ][ $version ] = isset( self::$extensions[ $name ][ $version ] ) ? self::$extensions[ $name ][ $version ] : $class_file;
+
+                    $api_check = str_replace( 'extension_' . $name, $name . '_api', $class_file );
+                    if ( file_exists( $api_check ) && ! class_exists( 'Redux_' . ucfirst( $name ) ) ) {
+                        include_once( $api_check );
+                    }
                 }
             }
 

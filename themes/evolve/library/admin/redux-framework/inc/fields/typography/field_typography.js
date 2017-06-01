@@ -25,12 +25,6 @@
         allowClear: true
     };
 
-    $( document ).ready(
-        function() {
-            //redux.field_objects.typography.init();
-        }
-    );
-
     redux.field_objects.typography.init = function( selector, skipCheck) {
 
         if ( !selector ) {
@@ -93,9 +87,13 @@
                         );
 
                         //init when value is changed
-                        $( this ).find( '.redux-typography-size, .redux-typography-height, .redux-typography-word, .redux-typography-letter, .redux-typography-align, .redux-typography-transform, .redux-typography-font-variant, .redux-typography-decoration' ).keyup(
+                        $( this ).find(
+                            '.redux-typography-size, .redux-typography-height, .redux-typography-word, .redux-typography-letter, .redux-typography-align, .redux-typography-transform, .redux-typography-font-variant, .redux-typography-decoration'
+                        ).keyup(
                             function() {
-                                redux.field_objects.typography.select( $( this ).parents( '.redux-container-typography:first' ) );
+                                redux.field_objects.typography.select(
+                                    $( this ).parents( '.redux-container-typography:first' )
+                                );
                             }
                         );
 
@@ -104,7 +102,7 @@
                             {
                                 change: function( e, ui ) {
                                     $( this ).val( ui.color.toString() );
-                                    redux.field_objects.typography.select( $( this ).parents( '.redux-container-typography:first' ) );
+                                    redux.field_objects.typography.select( $( this ) );
                                 }
                             }
                         );
@@ -117,7 +115,9 @@
                         );
 
                         // Allow negative numbers for indicated fields
-                        $( this ).find( ".redux-typography-height, .redux-typography-word, .redux-typography-letter" ).numeric(
+                        $( this ).find(
+                            ".redux-typography-height, .redux-typography-word, .redux-typography-letter"
+                        ).numeric(
                             {
                                 allowMinus: true
                             }
@@ -150,7 +150,9 @@
                                 var thisID = $( this ).parents( '.redux-container-typography:first' ).attr( 'data-id' );
 
                                 // User included fonts?
-                                var isUserFonts = $( '#' + thisID + ' .redux-typography-font-family' ).data( 'user-fonts' );
+                                var isUserFonts = $( '#' + thisID + ' .redux-typography-font-family' ).data(
+                                    'user-fonts'
+                                );
                                 isUserFonts = isUserFonts ? 1 : 0;
 
                                 // Google font isn use?
@@ -231,7 +233,9 @@
                                 selVals = val;
                                 isSelecting = true;
 
-                                redux.field_objects.typography.select( $( this ).parents( '.redux-container-typography:first' ) );
+                                redux.field_objects.typography.select(
+                                    $( this ).parents( '.redux-container-typography:first' )
+                                );
                             }
                         ).on(
                             'select2-clearing', function( val, choice ) {
@@ -242,7 +246,9 @@
 
                                 $( '#' + thisID + ' #' + thisID + '-google-font' ).val( 'false' );
 
-                                redux.field_objects.typography.select( $( this ).parents( '.redux-container-typography:first' ) );
+                                redux.field_objects.typography.select(
+                                    $( this ).parents( '.redux-container-typography:first' )
+                                );
                             }
                         );
 
@@ -252,7 +258,9 @@
                         }
 
                         // Init select2 for indicated fields
-                        el.find( ".redux-typography-family-backup, .redux-typography-align, .redux-typography-transform, .redux-typography-font-variant, .redux-typography-decoration" ).select2( default_params );
+                        el.find(
+                            ".redux-typography-family-backup, .redux-typography-align, .redux-typography-transform, .redux-typography-font-variant, .redux-typography-decoration"
+                        ).select2( default_params );
 
                     }
                 );
@@ -356,7 +364,9 @@
             google = redux.field_objects.typography.makeBool( selVals.object['data-google'] );
             $( '#' + mainID + ' .redux-typography-google-font' ).val( google );
         } else {
-            google = redux.field_objects.typography.makeBool( $( '#' + mainID + ' .redux-typography-google-font' ).val() ); // Check if font is a google font
+            google = redux.field_objects.typography.makeBool(
+                $( '#' + mainID + ' .redux-typography-google-font' ).val()
+            ); // Check if font is a google font
         }
 
         // Page load. Speeds things up memory wise to offload to client
@@ -617,8 +627,12 @@
                 );
             }
 
-            $( '#' + mainID + ' .typography-style .select2-chosen' ).text( $( '#' + mainID + ' .redux-typography-style option:selected' ).text() );
-            $( '#' + mainID + ' .typography-script .select2-chosen' ).text( $( '#' + mainID + ' .redux-typography-subsets option:selected' ).text() );
+            $( '#' + mainID + ' .typography-style .select2-chosen' ).text(
+                $( '#' + mainID + ' .redux-typography-style option:selected' ).text()
+            );
+            $( '#' + mainID + ' .typography-script .select2-chosen' ).text(
+                $( '#' + mainID + ' .redux-typography-subsets option:selected' ).text()
+            );
 
             if ( align ) {
                 $( '#' + mainID + ' .typography-preview' ).css( 'text-align', align );
