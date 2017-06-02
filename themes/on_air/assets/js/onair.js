@@ -1,22 +1,19 @@
 jQuery(function ($) {
-    var sucessRepeatTimeout = 12000;
-    var errorRepeatTimeout = 5000;
+    var newRepeatTimeout = 60 * 1000;
+    var defaultRepeatTimeout = 5 * 1000;
     var badgeAnimationDuration = 800;
 
     function getAjax(type, element) {
+        // var calls = 0;
+        // calls++;
+        // console.log('api calls ' + calls);
+
+        var repeatTimeout = defaultRepeatTimeout;
         $.ajax({
             type: type,
             url: element.data('endpoint'),
             dataType: 'json',
-            /*
-             data: { postVar1: 'theValue1', postVar2: 'theValue2' },
-             beforeSend:function(){
-             //console.log( "lorem ipsum");
-             },
-             */
             success: function (data) {
-                //console.log(Object.keys(data[Object.keys(data)[0]]));
-                //console.log(data[Object.keys(data)[0]].playing);
                 var myData = data[Object.keys(data)[0]];
                 // Radio is playing song
                 if (myData.playing && myData.playing !== undefined) {
@@ -25,24 +22,25 @@ jQuery(function ($) {
                         var myValue = myData[value];
                         $item = element.find('.' + value);
                         if ($item.length && myValue) {
+                            // console.log('item text: ' + $item.text() + ' - ' + $item.text().length);
+                            // song data got update
                             if ($item.text() !== myValue) {
-                                //console.log('item: '+$item.text());
-                                //console.log('value: '+myValue);
+
                                 $item.prop($item.data('updateprop'), myValue);
                                 if ($item.data('updatetext')) {
-                                   $item.text(myValue);
-                                   element.find('.badge').hide();
-                                   element.find('.badge_updated').fadeIn(badgeAnimationDuration);
-                                   element.find('.loader').hide();
-                                   element.find('.result').show();
+                                    $item.text(myValue);
+                                    element.find('.badge').hide();
+                                    element.find('.badge_updated').fadeIn(badgeAnimationDuration);
+                                    element.find('.loader').hide();
+                                    element.find('.result').show();
                                 }
-                                //console.log($item.data('updateprop'));
-
                             }
+                            // no update, still playing same song
                             else {
                                 element.find('.badge').hide();
                                 element.find('.badge_onair').show();
-                                //element.find('.badge_onair').fadeIn(badgeAnimationDuration);
+                                // we extend the call interval a bit, songs are usually longer
+                                repeatTimeout = newRepeatTimeout;
                             }
                         }
                     });
@@ -54,27 +52,28 @@ jQuery(function ($) {
                     element.find('.loader').show();
                     element.find('.result').hide();
                 }
-                setTimeout(function () {
-                    getAjax(type, element);
-                }, sucessRepeatTimeout);
             },
             error: function () {
                 console.log('error - called:' + element.data('endpoint'));
                 element.find('.artist').text('');
                 element.find('.title').text('');
+            },
+            complete: function () {
+                // here we set next call based on previous calls result
                 setTimeout(function () {
                     getAjax(type, element);
-                }, errorRepeatTimeout);
+                }, repeatTimeout);
+                console.log('current timeout:' + repeatTimeout);
             }
         });
     }
-    
+
     //ajaxify songs
     $(document).ready(function () {
         $('.ajax-onload').each(function (index) {
             getAjax('GET', $(this));
         });
-    }).on('click', '[data-toggle="lightbox"]', function(event) {
+    }).on('click', '[data-toggle="lightbox"]', function (event) {
         event.preventDefault();
         $(this).ekkoLightbox();
     });
