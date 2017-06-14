@@ -63,7 +63,7 @@ jQuery(function ($) {
                 setTimeout(function () {
                     getAjax(type, element);
                 }, repeatTimeout);
-                console.log('current timeout:' + repeatTimeout);
+                //console.log('current timeout:' + repeatTimeout);
             }
         });
     }

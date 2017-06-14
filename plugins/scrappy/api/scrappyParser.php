@@ -16,6 +16,7 @@ function get_live_song($radio_id, $getimages = FALSE) {
 		if ($key == 'scrappy_url')
 			$scrappy_url = $value[0];
 	}
+
 	if (substr($scrappy_url, 0, 1) == "/")
 		$scrappy_url = get_site_url() . $scrappy_url;
 	$return['radio_id'] = $radio_id;
@@ -30,7 +31,8 @@ function get_live_song($radio_id, $getimages = FALSE) {
 
 	// Detecting it is JSON
 	$inputType = (scrappy_isJson($inputText)) ? 'json' : 'html';
-
+	//echo $inputText;
+	//exit;
 	// Radio has not set proper values to parse, exit
 	if (!isset($fields) || !$inputText)
 		return;
