@@ -102,5 +102,8 @@ if ($evolve_pos_button == "disable" || $evolve_pos_button == "") {
 wp_footer();
 ?>
 </body>
+<?php 
+	get_template_part('page_templates/components/ga_tracking');
+?>
 <!--END html(kthxbye)-->
 </html>
